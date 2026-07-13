@@ -30,9 +30,21 @@ namespace Studentapi2.Controllers
         {
             var student = await _context.Students.FindAsync(id);
             if(student == null)
+                return NotFound ("NO STUDENT WITH THIS ID " + id);
             {
                 return Ok(student);
             }
+        }
+
+        [HttpPost]
+
+        public async Task<ActionResult<Student>> CreateStudent(Student student)
+        {
+            _context.Students.Add(student);
+
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(GetStudents), new { id = student.Id }, student);
         }
     }
 }
