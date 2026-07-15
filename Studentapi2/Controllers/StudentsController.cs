@@ -58,7 +58,7 @@ namespace Studentapi2.Controllers
             var existingStudent = await _context.Students.FindAsync(id);
             if (existingStudent == null)
             {
-                return NotFound("No Student FOund with this id:" + id)
+                return NotFound("No Student Found with this id:" + id);
             }
 
             existingStudent.FirstName = student.FirstName;
