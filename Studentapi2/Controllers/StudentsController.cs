@@ -29,8 +29,8 @@ namespace Studentapi2.Controllers
         public async Task<ActionResult<Student>> GetStudent(int id)
         {
             var student = await _context.Students.FindAsync(id);
-            if(student == null)
-                return NotFound ("NO STUDENT WITH THIS ID " + id);
+            if (student == null)
+                return NotFound("NO STUDENT WITH THIS ID " + id);
             {
                 return Ok(student);
             }
@@ -47,7 +47,7 @@ namespace Studentapi2.Controllers
             return CreatedAtAction(nameof(GetStudents), new { id = student.Id }, student);
         }
 
-        [HttpPost]
+        [HttpPut("{id}")]
 
         public async Task<IActionResult> UpdateStudent(int id, Student student)
         {
@@ -69,6 +69,44 @@ namespace Studentapi2.Controllers
             await _context.SaveChangesAsync();
 
             return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteStudent(int id)
+        {
+            var student = await _context.Students.FindAsync(id);
+
+            if (student == null)
+            {
+                return NotFound("No Student foun with this Id:" + id);
+            }
+
+            _context.Students.Remove(student);
+
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+        //Create a new student (Post /api/students)
+        [HttpPost]
+        public async Task<ActionResult<Student>> CreateStudent(Student student)
+        {
+
+        }
+//Create Multiple Student At Once(Post / api/Student/bulk)
+[HttpPost("bulk")]
+        public async Task<ActionResult<IEnumerable<Student>>> CreateStudentBulk(List<Student> students)
+        {
+            if (students == null || students.Count == 0)
+            {
+                return BadRequest("Please Provide at least one student in the request body");
+            }
+
+            _context.Students.AddRange(students);
+
+            await _context.SaveChangesAsync();
+
+            return Created(string.Empty, students);
         }
     }
 }
