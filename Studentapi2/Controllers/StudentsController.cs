@@ -46,6 +46,10 @@ namespace Studentapi2.Controllers
 
             return CreatedAtAction(nameof(GetStudents), new { id = student.Id }, student);
         }
+
+        [HttpPost]
+
+        public 
     }
 }
 
