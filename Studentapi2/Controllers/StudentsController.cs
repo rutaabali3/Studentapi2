@@ -57,6 +57,18 @@ namespace Studentapi2.Controllers
             }
             var existingStudent = await _context.Students.FindAsync(id);
             if (existingStudent == null)
+            {
+                return NotFound("No Student FOund with this id:" + id)
+            }
+
+            existingStudent.FirstName = student.FirstName;
+            existingStudent.LastName = student.LastName;
+            existingStudent.Age = student.Age;
+            existingStudent.Grade = student.Grade;
+
+            await _context.SaveChangesAsync();
+
+            return NoContent();
         }
     }
 }
