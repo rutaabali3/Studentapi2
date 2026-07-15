@@ -49,7 +49,15 @@ namespace Studentapi2.Controllers
 
         [HttpPost]
 
-        public async Task<IActionResult>
+        public async Task<IActionResult> UpdateStudent(int id, Student student)
+        {
+            if(id != student.Id)
+            {
+                return BadRequest("The id in the URL doesnot match the ID in the body");
+            }
+            var existingStudent = await _context.Students.FindAsync(id);
+            if (existingStudent == null)
+        }
     }
 }
 
