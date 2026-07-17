@@ -87,14 +87,9 @@ namespace Studentapi2.Controllers
 
             return NoContent();
         }
-        //Create a new student (Post /api/students)
-        [HttpPost]
-        public async Task<ActionResult<Student>> CreateStudent(Student student)
-        {
 
-        }
-//Create Multiple Student At Once(Post / api/Student/bulk)
-[HttpPost("bulk")]
+        //Create Multiple Student At Once(Post / api/Student/bulk)
+        [HttpPost("bulk")]
         public async Task<ActionResult<IEnumerable<Student>>> CreateStudentBulk(List<Student> students)
         {
             if (students == null || students.Count == 0)
